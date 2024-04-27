@@ -137,6 +137,11 @@ int main(int argc, char *argv[])
 
         if (argv[2] != NULL) // Write to output file
         {
+            if (strcmp(argv[1], argv[2]) == 0) // Check if input and output file are the same
+            {
+                fprintf(stderr, "reverse: input and output file must differ\n");
+                exit(1);
+            }
             FILE *outputFile = fopen(argv[2], "w");
             if (outputFile == NULL) // Check if file exists
             {
