@@ -11,17 +11,38 @@ void printError()
     write(stderr, error_message, strlen(error_message));
 }
 
+void parseInput(char *input, char *arguments[])
+{
+    char *token = strtok(input, " \t\n");
+    for(int i = 0; token != NULL; i++)
+    {
+        arguments[i] = token;
+        token = strtok(NULL, " \t\n");
+    }
+}
+
+void processArguments(char *arguments[])
+{
+    if(strcmp(arguments[0], "exit") == 0)
+    {
+        exit(0);
+    }
+}
+
 void runInteractive(FILE *file)
 {
     char *line = NULL;
     size_t len = 0;
+    char *arguments[64];
     while(1) 
     {
         printf("wish >");
         getline(&line, &len, file);
-        printf("%s\n", line);
+        parseInput(line, arguments);
+        processArguments(arguments);
     }
 }
+
 
 int main(int argc, char *argv[])
 {
